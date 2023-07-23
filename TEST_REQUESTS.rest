@@ -44,99 +44,68 @@ GET {{baseUrl}}/soft_delete
 #                   Quasar Categorias
 # --------------------------------------------------------
 
+### Lista de Categorias
+GET {{baseUrl}}/list_categorias
+
+### Crear Categoria (POST Json)
+POST {{baseUrl}}/create_categoria
+content-type: application/json
+
+{
+  "txt_categoria":"Urgente"
+}
+
+### Eliminar Categoría
+POST {{baseUrl}}/delete_categoria/1
+
 # --------------------------------------------------------
 #                   Quasar Notas
 # --------------------------------------------------------
 
+@idUserForNotas = 7
+
+### Lista de Notas Totales
+GET {{baseUrl}}/list_notas
+
+### Lista de Notas de Usuario
+GET {{baseUrl}}/list_notas/{{idUserForNotas}}
+
+### Crear Nota
+POST {{baseUrl}}/save_nota/{{idUserForNotas}}
+content-type: application/json
+
+{
+  "txt_nota":"Mi nota de tomasito",
+  "txt_info":"Descripción 🤣🤣 de nota con tomasito",
+  "categoriasIds":[1,4,99, "abc",1]
+}
+
+### Update Nota
+POST {{baseUrl}}/save_nota/{{idUserForNotas}}/14
+content-type: application/json
+
+{
+  "txt_nota":"Mi nota actualizada",
+  "txt_info":"Descripción 🤣🤣 de nota con tomasito",
+  "categoriasIds":[1,4,99, "abc",5]
+}
+
+### Eliminar Nota
+POST {{baseUrl}}/delete_nota/5
 
 
-
-
-
-
+### Obtener Notas previas a una semana
+GET {{baseUrl}}/list_notas/{{idUserForNotas}}/antiguas
 
 # --------------------------------------------------------
 #                   Testing Endpoints
 # --------------------------------------------------------
 ### Ping-Poing
-GET {{baseUrl}}/ping
+GET {{baseUrl}}/test/ping
 
 ### Welcome
-GET {{baseUrl}}/
+GET {{baseUrl}}/test/
 
-# --------------------------------------------------------
-#                   Auth Endpoints
-# --------------------------------------------------------
-
-### Login
-POST {{baseUrl}}/auth/login
-content-type: application/json
-
-{
-  "txt_email":"user1@example.com",
-  "txt_pass":"user1"
-}
-
-### Logout
-GET {{baseUrl}}/auth/logout
-
-### Register
-POST {{baseUrl}}/auth/register
-content-type: application/json
-
-{
-    "username": 30784322,
-    "email": "tom@mail.com",
-    "password":"qwerty12"
-}
-
-### Profile Test
-GET {{baseUrl}}/auth/profile
+### Bearer Token Test
+GET {{baseUrl}}/test/profile
 Authorization: Bearer {{token}}
-
-
-# --------------------------------------------------------
-#                   User Endpoints
-# --------------------------------------------------------
-
-
-### Get User
-GET {{baseUrl}}/usuario/2
-Authorization: Bearer {{token}}
-
-### CreateUser
-POST {{baseUrl}}/usuario/createUser
-content-type: application/json
-Authorization: Bearer {{token}}
-
-{
-
-}
-
-# --------------------------------------------------------
-#                   Cursos Endpoints
-# --------------------------------------------------------
-
-### ListarCursos
-GET {{baseUrl}}/cursos/lista
-content-type: application/json
-#Authorization: Bearer {{token}}
-
-# 26 nueva tierra, 28 siemens
-#{
-#  "idInsti":26
-#}
-
-
-# --------------------------------------------------------
-#                   Blog Endpoints
-# --------------------------------------------------------
-
-### CreateBlog
-POST {{baseUrl}}/blog/CreateBlog
-content-type: application/json
-Authorization: Bearer {{token}}
-
-{
-  "post":"Soy un blog post desde TEST_REQUEST.rest"
-}

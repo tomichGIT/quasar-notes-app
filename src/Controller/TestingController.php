@@ -183,7 +183,7 @@ class TestingController extends AbstractController
 
 
     // Catch ALL !!! (este controller y ruta debe ir al final de todos!)
-    #[Route('/{req}', name: 'catch_all', requirements: ['req' => '.*'], methods: ['GET', 'POST', 'PUT', 'DELETE'])]
+    #[Route('/test/{req}', name: 'catch_all', requirements: ['req' => '.*'], methods: ['GET', 'POST', 'PUT', 'DELETE'])]
     public function catchAll($req): Response
     {
         // You can handle the request here...

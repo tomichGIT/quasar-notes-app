@@ -6,10 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;       // para obtener datos de la petición (GET, POST, PUT, DELETE, etc.)
 use Symfony\Component\Routing\Annotation\Route;
-
-use App\Entity\Usuarios;
 use Doctrine\ORM\EntityManagerInterface;
 
+use App\Entity\Usuarios;
 use App\Repository\UsuariosRepository;
 
 class UsuariosController extends AbstractController
@@ -18,7 +17,7 @@ class UsuariosController extends AbstractController
     public function index(): JsonResponse
     {
         return $this->json([
-            'message' => 'Welcome to your new controller!',
+            'message' => 'Welcome to your Usuarios controller!',
             'path' => 'src/Controller/UsuariosController.php',
         ]);
     }

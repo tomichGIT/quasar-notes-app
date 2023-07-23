@@ -70,3 +70,17 @@ symfony server:start
 Acceder a `https://127.0.0.1:8000`
 
 ## API Endpoints:
+
+Se pueden testear los endpoints con POSTMAN o si lo deseas ya tienes las rutas creadas en TEST_REQUESTS.rest (requierela Extensión de VisualStudioCode `REST Client`)
+
+## Lista de Tareas:
+
+- [x] cambio a DB sqlite
+- [x] creación de Rutas de prueba con REST Client
+- [x] Cambio de rutas a host/API/v1/endpoint
+- [x] Listar Notas de un usuario específico
+- [x] Obtener Notas mas antiguas a una semana
+- [x] Mostrar antiguedad
+- [ ] Si hay una categoría con el mismo nombre, no crear una nueva [a-zA-Záéíóú]
+- [ ] JWT API token
+- [ ] Auth
