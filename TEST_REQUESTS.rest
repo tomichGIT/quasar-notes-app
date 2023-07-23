@@ -1,0 +1,142 @@
+#Probar distinos requests , separarlos con ###
+
+# Mis variables:
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE3LCJzZXNzaW9uSWQiOiIxMjNjYmRjMy1mNWE5LTRiNjAtOGRhOC0xNmFhM2M3MDg5NTkiLCJpYXQiOjE2ODk2MTM1NjJ9.2aJLn5gRT3DWFnO3M2HLgDDLRLCDg-k6tdbjY-117gw
+@baseUrl = https://127.0.0.1:8000/API/v1
+
+# --------------------------------------------------------
+#                   Quasar Usuarios
+# --------------------------------------------------------
+### Test API
+GET {{baseUrl}}/usuarios
+
+### Lista de Usuarios
+GET {{baseUrl}}/list_usuarios
+
+### Crear Usuario (GET)
+POST {{baseUrl}}/create_usuario
+?txt_user=Tomas
+&txt_pass=user1
+
+### Crear Usuario (POST Json)
+POST {{baseUrl}}/create_usuario
+content-type: application/json
+
+{
+  "txt_user":"TomasJosn",
+  "txt_pass":"12345"
+}
+
+### Eliminar Usuario
+POST {{baseUrl}}/delete_usuario/17
+
+### Eliminar todos los usuarios "Tomas"
+DELETE {{baseUrl}}/delete_tomas
+
+### Soft Delete todos los usaruis "Tomas"
+GET {{baseUrl}}/soft_delete
+
+
+
+
+
+# --------------------------------------------------------
+#                   Quasar Categorias
+# --------------------------------------------------------
+
+# --------------------------------------------------------
+#                   Quasar Notas
+# --------------------------------------------------------
+
+
+
+
+
+
+
+
+# --------------------------------------------------------
+#                   Testing Endpoints
+# --------------------------------------------------------
+### Ping-Poing
+GET {{baseUrl}}/ping
+
+### Welcome
+GET {{baseUrl}}/
+
+# --------------------------------------------------------
+#                   Auth Endpoints
+# --------------------------------------------------------
+
+### Login
+POST {{baseUrl}}/auth/login
+content-type: application/json
+
+{
+  "txt_email":"user1@example.com",
+  "txt_pass":"user1"
+}
+
+### Logout
+GET {{baseUrl}}/auth/logout
+
+### Register
+POST {{baseUrl}}/auth/register
+content-type: application/json
+
+{
+    "username": 30784322,
+    "email": "tom@mail.com",
+    "password":"qwerty12"
+}
+
+### Profile Test
+GET {{baseUrl}}/auth/profile
+Authorization: Bearer {{token}}
+
+
+# --------------------------------------------------------
+#                   User Endpoints
+# --------------------------------------------------------
+
+
+### Get User
+GET {{baseUrl}}/usuario/2
+Authorization: Bearer {{token}}
+
+### CreateUser
+POST {{baseUrl}}/usuario/createUser
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+
+}
+
+# --------------------------------------------------------
+#                   Cursos Endpoints
+# --------------------------------------------------------
+
+### ListarCursos
+GET {{baseUrl}}/cursos/lista
+content-type: application/json
+#Authorization: Bearer {{token}}
+
+# 26 nueva tierra, 28 siemens
+#{
+#  "idInsti":26
+#}
+
+
+# --------------------------------------------------------
+#                   Blog Endpoints
+# --------------------------------------------------------
+
+### CreateBlog
+POST {{baseUrl}}/blog/CreateBlog
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "post":"Soy un blog post desde TEST_REQUEST.rest"
+}
