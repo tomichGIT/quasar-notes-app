@@ -73,29 +73,29 @@ prepend: http://localhost:8000/API/v1/ + URI
 
 ### Categorias
 
-| Method     | URI                               | Action                                                  |
-|------------|-----------------------------------|---------------------------------------------------------|
-| `GET/HEAD` | `list_categorias`                 | `src\Controller\CategoriasController@listCategoria`     |
-| `POST`     | `save_categorias`                 | `src\Controller\CategoriasController@saveCategoria`     |
-| `PUT`      | `save_categorias/{idCategoria}`   | `src\Controller\CategoriasController@saveCategoria`     |
-| `DELETE`   | `delete_categoria/{idCategoria}`  | `src\Controller\CategoriasController@deleteCategoria`   |
+| Method     | URI                               | Action                                                  | Request Data (Json) |
+|------------|-----------------------------------|---------------------------------------------------------|---------------------|
+| `GET/HEAD` | `list_categorias`                 | `src\Controller\CategoriasController@listCategoria`     |N/A |
+| `POST`     | `save_categorias`                 | `src\Controller\CategoriasController@saveCategoria`     |`{"txt_user":"Jhon","txt_pass":"1234"}` |
+| `PUT`      | `save_categorias/{idCategoria}`   | `src\Controller\CategoriasController@saveCategoria`     |`{"txt_user":"Jhon","txt_pass":"1234"}` |
+| `DELETE`   | `delete_categoria/{idCategoria}`  | `src\Controller\CategoriasController@deleteCategoria`   |N/A |
 
 ### Notas
 
-| Method     | URI                               | Action                                                  |
-|------------|-----------------------------------|---------------------------------------------------------|
-| `GET/HEAD` | `lista_notas`                     | `src\Controller\NotasController@listNotas`              |
-| `GET/HEAD` | `lista_notas/{idUsuario}`         | `src\Controller\NotasController@listNotasUsuario`       |
-| `GET/HEAD` | `list_notas/{idUsuario}/antiguas` | `src\Controller\NotasController@listaNotasAntiguas`     |
-| `POST`     | `save_nota/{idUsuario}/`          | `src\Controller\NotasController@saveNota`               |
-| `PUT`      | `save_nota/{idUsuario}/{idNota?}` | `src\Controller\NotasController@saveNota`               |
-| `DELETE`   | `delete_nota/{idNota}`            | `src\Controller\NotasController@deleteNota`             |
+| Method     | URI                               | Action                                                  | Request Data (Json) |
+|------------|-----------------------------------|---------------------------------------------------------|---------------------|
+| `GET/HEAD` | `lista_notas`                     | `src\Controller\NotasController@listNotas`              |N/A |
+| `GET/HEAD` | `lista_notas/{idUsuario}`         | `src\Controller\NotasController@listNotasUsuario`       |N/A |
+| `GET/HEAD` | `list_notas/{idUsuario}/antiguas` | `src\Controller\NotasController@listaNotasAntiguas`     |N/A |
+| `POST`     | `save_nota/{idUsuario}/`          | `src\Controller\NotasController@saveNota`               |`{"txt_nota":"Title","txt_info":"Text","categoriasIds":[1,2]}` |
+| `PUT`      | `save_nota/{idUsuario}/{idNota?}` | `src\Controller\NotasController@saveNota`               |`{"txt_nota":"Title","txt_info":"Text","categoriasIds":[1,2]}` |
+| `DELETE`   | `delete_nota/{idNota}`            | `src\Controller\NotasController@deleteNota`             |N/A |
 
 ### Usuarios
 
-| Method     | URI                               | Action                                                  |
-|------------|-----------------------------------|---------------------------------------------------------|
-| `GET/HEAD` | `list_usuarios`                   | `src\Controller\UsuariosController@listUsuarios`        |
-| `POST`     | `save_usuario`                    | `src\Controller\UsuariosController@saveUsuario`         |
-| `PUT`      | `save_usuario/{idUsuario}`        | `src\Controller\UsuariosController@saveUsuario`         |
-| `DELETE`   | `delete_usuario/{idUsuario}`      | `src\Controller\UsuariosController@deleteUsuario`       |
+| Method     | URI                               | Action                                                  | Request Data (Json) |
+|------------|-----------------------------------|---------------------------------------------------------|---------------------|
+| `GET/HEAD` | `list_usuarios`                   | `src\Controller\UsuariosController@listUsuarios`        |N/A |
+| `POST`     | `save_usuario`                    | `src\Controller\UsuariosController@saveUsuario`         |`{"txt_categoria":"Category 1"}` |
+| `PUT`      | `save_usuario/{idUsuario}`        | `src\Controller\UsuariosController@saveUsuario`         |`{"txt_categoria":"Category 1"}` |
+| `DELETE`   | `delete_usuario/{idUsuario}`      | `src\Controller\UsuariosController@deleteUsuario`       |N/A |
