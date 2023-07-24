@@ -48,8 +48,11 @@ Acceder a `http://127.0.0.1:8000`
 ## Stack
 
 <div align="center">
+<a href="sqLite">
+    <img src= "https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white"/>
+</a>
 <a href="Symfony">
-    <img src= "https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB"/>
+    <img src= "https://img.shields.io/badge/symfony-%23000000.svg?style=for-the-badge&logo=symfony&logoColor=white"/>
 </a>
 <a href="PHP">
     <img src= "https://img.shields.io/badge/php-%23777BB4.svg?style=for-the-badge&logo=php&logoColor=white"/>
