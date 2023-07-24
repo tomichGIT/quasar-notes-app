@@ -17,14 +17,14 @@ Además, se requiere implementar un método adicional que permita mostrar las
 notas pasadas, es decir, aquellas notas que hayan sido creadas hace más de 7 días.
 
 
-## Instalación:
+## Instalación
 ```bash
-git clone https://github.com/quasar-notes-app
+git clone https://github.com/tomichGIT/quasar-notes-app
 cd quasar-notes-app
 composer install
 ```
 
-Info and run the project
+## Correr el App
 ```bash
 php bin/console about
 symfony server:start
@@ -32,7 +32,7 @@ symfony server:start
 
 Acceder a `http://127.0.0.1:8000`
 
-## Lista de Tareas:
+## Lista de Tareas
 
 - [x] cambio a DB sqlite
 - [x] creación de Rutas de prueba con REST Client
@@ -45,11 +45,28 @@ Acceder a `http://127.0.0.1:8000`
 - [ ] JWT API token
 - [ ] Auth
 
+## Stack
+
+<div align="center">
+<a href="Symfony">
+    <img src= "https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB"/>
+</a>
+<a href="PHP">
+    <img src= "https://img.shields.io/badge/php-%23777BB4.svg?style=for-the-badge&logo=php&logoColor=white"/>
+</a>
+ <a href="VSC">
+    <img src= "https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white"/>
+</a>
+<a href="JWT">
+    <img src= "https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens"/>
+</a>
+</div>
+
 ## API Endpoints:
 
 Se pueden testear los endpoints con POSTMAN o si lo deseas ya tienes las rutas creadas en `TEST_REQUESTS.rest` (requiere la extensión de VSC `REST Client`)
 
-prepend: http://server:port/API/v1/
+prepend: http://localhost:8000/API/v1/ + URI
 
 ### Categorias
 
