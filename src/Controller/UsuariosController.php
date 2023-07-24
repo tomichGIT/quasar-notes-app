@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;       // para obtener datos de la petición (GET, POST, PUT, DELETE, etc.)
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -22,8 +23,8 @@ class UsuariosController extends AbstractController
         ]);
     }
 
-    #[Route('/create_usuario', name: 'create_usuario', methods: ['POST'])]
-    public function createUsuario(Request $request, EntityManagerInterface $em): JsonResponse
+    #[Route('/save_usuario/{idUsuario?}', name: 'save_usuario', methods: ['POST','PUT'])]
+    public function createUsuario(Request $request, UsuariosRepository $usuariosRepository, EntityManagerInterface $em, int $idUsuario = null): JsonResponse
     {
         $A_data = json_decode($request->getContent(), true);
         $txt_user=$A_data["txt_user"];
@@ -39,25 +40,32 @@ class UsuariosController extends AbstractController
 
         $now=new \DateTime();
 
-        $usuario = new Usuarios();
+        // Create or Update
+        if($idUsuario){
+            $usuario=$em->getRepository(Usuarios::class)->find($idUsuario); // update
+            $msg="Usuario actualizado con éxito";
+            $statusCode=Response::HTTP_OK; // 200
+        } else {
+            $usuario = new Usuarios();
+            $usuario->setCreatedAt($now);
+            $msg="Usuario Creado con éxito";
+            $statusCode=Response::HTTP_CREATED; // 201
+        }
+        // Shared Props
         $usuario->setUsuario($txt_user);
         $usuario->setPass($encryptedPass);
-        $usuario->setCreatedAt($now);
         $usuario->setUpdatedAt($now);
 
         $em->persist($usuario); // tell Doctrine you want to (eventually) save the Product (no queries yet)
         $em->flush(); // actually executes the queries (i.e. the INSERT query)
 
-        $response = new JsonResponse(); // convierte un array en JSON
-        $response->setData([
+        return new JsonResponse([
             'success' => true,
             'data' => ["id" => $usuario->getId(), "usuario" => $usuario->getUsuario(), "fecha" => $usuario->getCreatedAt()->format('d-m-Y H:i')],
-            "msg" => "usuario creado con éxito"
+            "msg" => $msg,
+            "status" => $statusCode
         ]);
-        return $response;
-
-        // standard Html Response
-        //return new Response('Saved new user with id '.$usuario->getId());
+       
     }
 
     #[Route('/list_usuarios', name: 'list_usuarios')]
@@ -77,13 +85,38 @@ class UsuariosController extends AbstractController
             ];
         }
 
-        $response = new JsonResponse(); // convierte un array en JSON
-        $response->setData([
+        return new JsonResponse([
             'success' => true,
             'data' => $A_usuarios,
             'msg' => "Usuarios obtenidos con éxito",
-            'cant' => count($A_usuarios)
+            'cant' => count($A_usuarios),
+            "status" => Response::HTTP_OK
         ]);
-        return $response;
+    }
+
+    #[Route('/delete_usuario/{idUsuario}', name: 'delete_usuario', methods: ['DELETE'])]
+    public function deleteUsuario(int $idUsuario, UsuariosRepository $usuariosRepository, EntityManagerInterface $em)
+    {
+
+        if (!$idUsuario) {  return new JsonResponse([ 'success' => false, 'msg' => 'No se ha proporcionado un ID de usuario' ]); }
+        $usuario = $usuariosRepository->find($idUsuario); // find(), findBy(), findAll(), findOneBy() | ej: findBy(['status' => 3])
+        if (!$usuario) {    return new JsonResponse([ 'success' => false, 'msg' => "No se encontró al usuario con el ID $idUsuario"]); }
+    
+        $nombre = $usuario->getUsuario(); // use the getter method to retrieve the name
+
+        //foreach($usuarios as $usuario) { $em->remove($usuario)} // eliminación de múltiples registros
+        $em->remove($usuario); // si fueran varios resultados, utilizo $em->remove($usuario) dentro de un foreach
+        $em->flush();
+        
+        return new JsonResponse([
+            'success' => true,
+            'data' => $nombre,
+            'msg' => "Usuario $nombre eliminado con éxito",
+            "status" => Response::HTTP_NO_CONTENT
+        ]);
+
     }
 }
+
+
+

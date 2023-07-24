@@ -16,43 +16,6 @@ Las entidades y sus relaciones son las siguientes:
 Además, se requiere implementar un método adicional que permita mostrar las
 notas pasadas, es decir, aquellas notas que hayan sido creadas hace más de 7 días.
 
-## Setup BoilerPlate:
-
-```bash
-symfony new quasar-notes-app
-cd .\quasar-notes-app\
-composer require annotations
-git init
-composer require symfony/orm-pack --with-all-dependencies
-composer require --dev symfony/maker-bundle
-composer require logger
-symfony check:security
-```
-
-Controllers:
-```bash
-php bin/console make:controller
-```
-
-Database:
-Update .env file with database_url
-Create entities including updatedAt, createdAt (id is auto)
-```bash
-php bin/console doctrine:database:create
-php bin/console make:entity
-php bin/console make:migration
-```
-
-Craeción de Relaciones ManyToMany, OneToMany, ManyToOne.
-Una vez creadas las tablas por separadas, puedo volver a ejecutar `php bin/console make:entity` para editar una de las tablas.
-En nuevo "property" seleccionar el nombre del item de la tabla a relacionar.
-en FieldType usar "relation", luego elegir el tipo de relación y con que Clase se relaciona.
-
-en cambios del schema ejecutar:
-```bash
-php bin/console make:migration
-php bin/console doctrine:migrations:migrate
-```
 
 ## Instalación:
 ```bash
@@ -67,20 +30,52 @@ php bin/console about
 symfony server:start
 ```
 
-Acceder a `https://127.0.0.1:8000`
-
-## API Endpoints:
-
-Se pueden testear los endpoints con POSTMAN o si lo deseas ya tienes las rutas creadas en TEST_REQUESTS.rest (requierela Extensión de VisualStudioCode `REST Client`)
+Acceder a `http://127.0.0.1:8000`
 
 ## Lista de Tareas:
 
 - [x] cambio a DB sqlite
 - [x] creación de Rutas de prueba con REST Client
-- [x] Cambio de rutas a host/API/v1/endpoint
+- [x] Cambio de rutas a server/API/v1/endpoint
 - [x] Listar Notas de un usuario específico
 - [x] Obtener Notas mas antiguas a una semana
-- [x] Mostrar antiguedad
-- [ ] Si hay una categoría con el mismo nombre, no crear una nueva [a-zA-Záéíóú]
+- [x] Mostrar antiguedad en el response
+- [x] SoftDelete de Usuarios (TestingController)
+- [ ] Si hay una categoría con el mismo nombre, no crear una nueva RegEX[a-zA-Záéíóú]
 - [ ] JWT API token
 - [ ] Auth
+
+## API Endpoints:
+
+Se pueden testear los endpoints con POSTMAN o si lo deseas ya tienes las rutas creadas en `TEST_REQUESTS.rest` (requiere la extensión de VSC `REST Client`)
+
+prepend: http://server:port/API/v1/
+
+### Categorias
+
+| Method     | URI                               | Action                                                  |
+|------------|-----------------------------------|---------------------------------------------------------|
+| `GET/HEAD` | `list_categorias`                 | `src\Controller\CategoriasController@listCategoria`     |
+| `POST`     | `save_categorias`                 | `src\Controller\CategoriasController@saveCategoria`     |
+| `PUT`      | `save_categorias/{idCategoria}`   | `src\Controller\CategoriasController@saveCategoria`     |
+| `DELETE`   | `delete_categoria/{idCategoria}`  | `src\Controller\CategoriasController@deleteCategoria`   |
+
+### Notas
+
+| Method     | URI                               | Action                                                  |
+|------------|-----------------------------------|---------------------------------------------------------|
+| `GET/HEAD` | `lista_notas`                     | `src\Controller\NotasController@listNotas`              |
+| `GET/HEAD` | `lista_notas/{idUsuario}`         | `src\Controller\NotasController@listNotasUsuario`       |
+| `GET/HEAD` | `list_notas/{idUsuario}/antiguas` | `src\Controller\NotasController@listaNotasAntiguas`     |
+| `POST`     | `save_nota/{idUsuario}/`          | `src\Controller\NotasController@saveNota`               |
+| `PUT`      | `save_nota/{idUsuario}/{idNota?}` | `src\Controller\NotasController@saveNota`               |
+| `DELETE`   | `delete_nota/{idNota}`            | `src\Controller\NotasController@deleteNota`             |
+
+### Usuarios
+
+| Method     | URI                               | Action                                                  |
+|------------|-----------------------------------|---------------------------------------------------------|
+| `GET/HEAD` | `list_usuarios`                   | `src\Controller\UsuariosController@listUsuarios`        |
+| `POST`     | `save_usuario`                    | `src\Controller\UsuariosController@saveUsuario`         |
+| `PUT`      | `save_usuario/{idUsuario}`        | `src\Controller\UsuariosController@saveUsuario`         |
+| `DELETE`   | `delete_usuario/{idUsuario}`      | `src\Controller\UsuariosController@deleteUsuario`       |

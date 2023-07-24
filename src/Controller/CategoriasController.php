@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;       // para obtener datos de la petición (GET, POST, PUT, DELETE, etc.)
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -35,50 +36,55 @@ class CategoriasController extends AbstractController
             ];
         }
 
-        $response = new JsonResponse(); // convierte un array en JSON
-        $response->setData([
+        return new JsonResponse([
             'success' => true,
             'data' => $A_categorias,
             'msg' => "Categorías obtenidas con éxito",
             'cant' => count($A_categorias)
         ]);
-        return $response;
-
     }
 
 
 
-    #[Route('/create_categoria', name: 'create_categoria', methods: ['POST'])]
-    public function createCategoria(Request $request, EntityManagerInterface $em): JsonResponse
+    #[Route('/save_categoria/{idCategoria?}', name: 'save_categoria', methods: ['POST','PUT'])]
+    public function saveCategoria(Request $request, EntityManagerInterface $em, int $idCategoria = null): JsonResponse
     {
         $A_data = json_decode($request->getContent(), true);
         $txt_categoria=$A_data["txt_categoria"];
 
         if(empty($txt_categoria)){
-            $response = new JsonResponse();
-            $response->setData(['success' => false, 'data' => [], 'msg' => 'Nombre de categoría inválido']);
-            return $response;
+            return new JsonResponse(['success' => false, 'data' => [], 'msg' => 'Nombre de categoría inválido']);
         }
 
         $now=new \DateTime();
 
-        $categoria = new Categorias();
+        // Create or Update
+        // $categoria = $idCategoria ? $em->getRepository(Categorias::class)->find($idCategoria) : new Categorias();
+        if($idCategoria){  
+            $categoria = $em->getRepository(Categorias::class)->find($idCategoria); // update
+            $msg="Categoria actualizada con éxito";
+            $statusCode=Response::HTTP_OK; // 200
+        } else {
+            $categoria = new Categorias();  // insert
+            $categoria->setCreatedAt($now);
+            $msg="Categoría creada con éxito";
+            $statusCode=Response::HTTP_CREATED; // 201
+        }
         $categoria->setCategoria($txt_categoria);
-        $categoria->setCreatedAt($now);
 
         $em->persist($categoria); // tell Doctrine you want to (eventually) save the Product (no queries yet)
         $em->flush(); // actually executes the queries (i.e. the INSERT query)
 
-        $response = new JsonResponse(); // convierte un array en JSON
-        $response->setData([
+        return new JsonResponse([
             'success' => true,
             'data' => ["id" => $categoria->getId(), "categoria" => $categoria->getCategoria(), "fecha" => $categoria->getCreatedAt()->format('d-m-Y H:i')],
-            "msg" => "Categoría creada con éxito"
+            "msg" => $msg,
+            "status" => $statusCode
         ]);
-        return $response;
     }
 
-    #[Route('/delete_categoria/{idCategoria}', name: 'delete_categoria', methods: ['POST'])]
+
+    #[Route('/delete_categoria/{idCategoria}', name: 'delete_categoria', methods: ['DELETE'])]
     public function deleteCategoria(int $idCategoria, CategoriasRepository $categoriasRepository, EntityManagerInterface $em)
     {
  
@@ -95,6 +101,7 @@ class CategoriasController extends AbstractController
             'success' => true,
             'data' => $txt_categoria,
             'msg' => "Categoría $txt_categoria eliminada con éxito",
+            "status" => Response::HTTP_NO_CONTENT
         ]);
 
     }

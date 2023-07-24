@@ -1,7 +1,7 @@
 #Probar distinos requests , separarlos con ###
 
 # Mis variables:
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE3LCJzZXNzaW9uSWQiOiIxMjNjYmRjMy1mNWE5LTRiNjAtOGRhOC0xNmFhM2M3MDg5NTkiLCJpYXQiOjE2ODk2MTM1NjJ9.2aJLn5gRT3DWFnO3M2HLgDDLRLCDg-k6tdbjY-117gw
+@token = JwT-TOKEN123
 @baseUrl = https://127.0.0.1:8000/API/v1
 
 # --------------------------------------------------------
@@ -13,30 +13,26 @@ GET {{baseUrl}}/usuarios
 ### Lista de Usuarios
 GET {{baseUrl}}/list_usuarios
 
-### Crear Usuario (GET)
-POST {{baseUrl}}/create_usuario
-?txt_user=Tomas
-&txt_pass=user1
-
 ### Crear Usuario (POST Json)
-POST {{baseUrl}}/create_usuario
+POST {{baseUrl}}/save_usuario
 content-type: application/json
 
 {
-  "txt_user":"TomasJosn",
+  "txt_user":"Tomas",
   "txt_pass":"12345"
 }
 
+### Update Usuario
+PUT {{baseUrl}}/save_usuario/18
+content-type: application/json
+
+{
+  "txt_user":"Tomassss18",
+  "txt_pass":"12345666"
+}
+
 ### Eliminar Usuario
-POST {{baseUrl}}/delete_usuario/17
-
-### Eliminar todos los usuarios "Tomas"
-DELETE {{baseUrl}}/delete_tomas
-
-### Soft Delete todos los usaruis "Tomas"
-GET {{baseUrl}}/soft_delete
-
-
+DELETE {{baseUrl}}/delete_usuario/15
 
 
 
@@ -48,15 +44,25 @@ GET {{baseUrl}}/soft_delete
 GET {{baseUrl}}/list_categorias
 
 ### Crear Categoria (POST Json)
-POST {{baseUrl}}/create_categoria
+POST {{baseUrl}}/save_categoria
 content-type: application/json
 
 {
-  "txt_categoria":"Urgente"
+  "txt_categoria":"borrame"
+}
+
+### Update Categoria
+PUT {{baseUrl}}/save_categoria/9
+content-type: application/json
+
+{
+  "txt_categoria":"Mejor no me borres"
 }
 
 ### Eliminar Categoría
-POST {{baseUrl}}/delete_categoria/1
+DELETE {{baseUrl}}/delete_categoria/7
+
+
 
 # --------------------------------------------------------
 #                   Quasar Notas
@@ -64,7 +70,7 @@ POST {{baseUrl}}/delete_categoria/1
 
 @idUserForNotas = 7
 
-### Lista de Notas Totales
+### Lista de Notas de Todos los usuarios
 GET {{baseUrl}}/list_notas
 
 ### Lista de Notas de Usuario
@@ -81,31 +87,18 @@ content-type: application/json
 }
 
 ### Update Nota
-POST {{baseUrl}}/save_nota/{{idUserForNotas}}/14
+PUT {{baseUrl}}/save_nota/{{idUserForNotas}}/14
 content-type: application/json
 
 {
   "txt_nota":"Mi nota actualizada",
-  "txt_info":"Descripción 🤣🤣 de nota con tomasito",
+  "txt_info":"Descripción 🤣🤣 de nota",
   "categoriasIds":[1,4,99, "abc",5]
 }
 
 ### Eliminar Nota
-POST {{baseUrl}}/delete_nota/5
+DELETE {{baseUrl}}/delete_nota/5
 
 
 ### Obtener Notas previas a una semana
 GET {{baseUrl}}/list_notas/{{idUserForNotas}}/antiguas
-
-# --------------------------------------------------------
-#                   Testing Endpoints
-# --------------------------------------------------------
-### Ping-Poing
-GET {{baseUrl}}/test/ping
-
-### Welcome
-GET {{baseUrl}}/test/
-
-### Bearer Token Test
-GET {{baseUrl}}/test/profile
-Authorization: Bearer {{token}}

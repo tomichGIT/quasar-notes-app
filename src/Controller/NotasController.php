@@ -54,11 +54,15 @@ class NotasController extends AbstractController
                 ];
             }
 
+            $usuario = $nota->getUsuario();            
+
             $A_notas[] = [
                 'id' => $nota->getId(),
                 'notas' => $nota->getNota(),
                 'info' => $nota ->getDescripcion(),
                 'categorias'=> $A_categorias,
+                'idUsuario' => $usuario->getId(),
+                'usuario' => $usuario->getUsuario(),
                 'createdAt' => $nota->getCreatedAt()->format('Y-m-d H:i:s'),
                 'updatedAt' => $nota->getUpdatedAt()->format('Y-m-d H:i:s')
             ];
@@ -118,7 +122,7 @@ class NotasController extends AbstractController
 
     // Las notas Antiguas (7 días)
     #[Route('/list_notas/{idUsuario}/antiguas', name: 'notas_antiguas', methods: ['GET'])]
-    public function notasAntiguas(int $idUsuario, NotasRepository $notasRepository, EntityManagerInterface $em): Response
+    public function listaNotasAntiguas(int $idUsuario, NotasRepository $notasRepository, EntityManagerInterface $em): Response
     {
         $usuario = $em->getRepository(Usuarios::class)->find($idUsuario);
         if(empty($usuario)){ $response = new JsonResponse(); $response->setData(['success' => false, 'data' => [], 'msg' => 'Usuario incorrecto']); return $response; }
@@ -173,8 +177,8 @@ class NotasController extends AbstractController
 
 
     // Craete or Update
-    #[Route('/save_nota/{idUsuario}/{idNota?}', name: 'save_nota', methods: ['POST'])]
-    public function createNota(int $idUsuario, Request $request, EntityManagerInterface $em, int $idNota = null): JsonResponse
+    #[Route('/save_nota/{idUsuario}/{idNota?}', name: 'save_nota', methods: ['POST','PUT'])]
+    public function saveNota(int $idUsuario, Request $request, EntityManagerInterface $em, int $idNota = null): JsonResponse
     {
         $A_data = json_decode($request->getContent(), true);
         $txt_nota=$A_data["txt_nota"];
@@ -193,13 +197,13 @@ class NotasController extends AbstractController
         if($idNota){    
             $nota=$em->getRepository(Notas::class)->find($idNota);  // update
             $msg="Nota Actualizada con éxito";
-            $statusCode=Response::HTTP_CREATED; // 201
+            $statusCode=Response::HTTP_OK; // 200
         } else {        
             $nota = new Notas();                                    // insert
             $nota->setCreatedAt($now);
             $nota->setUsuario($usuario);
             $msg="Nota Creada con éxito";
-            $statusCode=Response::HTTP_OK; // 200
+            $statusCode=Response::HTTP_CREATED; // 201
         }
         // Shared Props
         $nota->setNota($txt_nota);
@@ -232,7 +236,7 @@ class NotasController extends AbstractController
         
     }
 
-    #[Route('/delete_nota/{idNota}', name: 'delete_nota', methods: ['POST'])]
+    #[Route('/delete_nota/{idNota}', name: 'delete_nota', methods: ['DELETE'])]
     public function deleteNota(int $idNota, NotasRepository $notasRepository, EntityManagerInterface $em)
     {
  
