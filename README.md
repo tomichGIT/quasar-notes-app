@@ -45,7 +45,7 @@ Acceder a `http://127.0.0.1:8000`
 
 ## Database Schema
 
-![image](https://github.com/tomichGIT/quasar-notes-app/assets/42836560/80fc251e-ff56-4c3b-9e29-452dd066450e)
+![image](https://github.com/tomichGIT/quasar-notes-app/assets/42836560/a71cbb9d-c173-485b-8cfd-6d29682e144a)
 
 
 ## API Endpoints:
