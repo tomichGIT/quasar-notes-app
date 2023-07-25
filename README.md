@@ -32,7 +32,7 @@ symfony server:start
 
 Acceder a `http://127.0.0.1:8000`
 
-## Lista de Tareas
+## Features v1.0
 
 - [x] cambio a DB sqlite
 - [x] creación de Rutas de prueba con REST Client
@@ -41,29 +41,12 @@ Acceder a `http://127.0.0.1:8000`
 - [x] Obtener Notas mas antiguas a una semana
 - [x] Mostrar antiguedad en el response
 - [x] SoftDelete de Usuarios (TestingController)
-- [ ] Si hay una categoría con el mismo nombre, no crear una nueva RegEX[a-zA-Záéíóú]
-- [ ] JWT API token
-- [ ] Auth
 
-## Stack
 
-<div align="center">
-<a href="sqLite">
-    <img src= "https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white"/>
-</a>
-<a href="Symfony">
-    <img src= "https://img.shields.io/badge/symfony-%23000000.svg?style=for-the-badge&logo=symfony&logoColor=white"/>
-</a>
-<a href="PHP">
-    <img src= "https://img.shields.io/badge/php-%23777BB4.svg?style=for-the-badge&logo=php&logoColor=white"/>
-</a>
- <a href="VSC">
-    <img src= "https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white"/>
-</a>
-<a href="JWT">
-    <img src= "https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens"/>
-</a>
-</div>
+## Database Schema
+
+![image](https://github.com/tomichGIT/quasar-notes-app/assets/42836560/80fc251e-ff56-4c3b-9e29-452dd066450e)
+
 
 ## API Endpoints:
 
@@ -99,3 +82,32 @@ prepend: http://localhost:8000/API/v1/ + URI
 | `POST`     | `save_usuario`                    | `src\Controller\UsuariosController@saveUsuario`         |`{"txt_categoria":"Category 1"}` |
 | `PUT`      | `save_usuario/{idUsuario}`        | `src\Controller\UsuariosController@saveUsuario`         |`{"txt_categoria":"Category 1"}` |
 | `DELETE`   | `delete_usuario/{idUsuario}`      | `src\Controller\UsuariosController@deleteUsuario`       |N/A |
+
+
+## ToDo
+
+- [ ] Si hay una categoría con el mismo nombre, no crear una nueva RegEX[a-zA-Záéíóú]
+- [ ] JWT API token
+- [ ] Auth
+
+
+## Stack
+
+<div align="center">
+<a href="sqLite">
+    <img src= "https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white"/>
+</a>
+<a href="Symfony">
+    <img src= "https://img.shields.io/badge/symfony-%23000000.svg?style=for-the-badge&logo=symfony&logoColor=white"/>
+</a>
+<a href="PHP">
+    <img src= "https://img.shields.io/badge/php-%23777BB4.svg?style=for-the-badge&logo=php&logoColor=white"/>
+</a>
+ <a href="VSC">
+    <img src= "https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white"/>
+</a>
+<a href="JWT">
+    <img src= "https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens"/>
+</a>
+</div>
+
